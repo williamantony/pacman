@@ -9,6 +9,14 @@
 
 <style>
 
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    margin: 0px;
+  }
   .Pacman {
     position: relative;
     width: 300px;
@@ -25,7 +33,6 @@
     height: 50px;
     border-radius: 50%;
     background-color: #fff;
-    overflow: hidden;
   }
   .Pacman__eye__pupil {
     position: absolute;
@@ -47,13 +54,33 @@
 <body>
   
   <div class="Pacman">
-
     <div class="Pacman__mouth"></div>
-    <div class="Pacman__eye">
+    <div class="Pacman__eye" id="eye">
       <div class="Pacman__eye__pupil"></div>
     </div>
-
   </div>
 
+  <script>
+
+    const rotateEye = (event) => {
+
+      const xCordinate = event.clientX;
+      const yCordinate = event.clientY;
+
+      const eye = document.getElementById('eye');
+      const eyeOffset = eye.getBoundingClientRect();
+      
+      const xRelative = xCordinate - (eyeOffset.left + (eyeOffset.width / 2));
+      const yRelative = yCordinate - (eyeOffset.top + (eyeOffset.height / 2));
+
+      const angle = Math.atan2(xRelative, yRelative) * 180 / Math.PI;
+
+      eye.style.transform = `rotate(${ -(angle - 90) }deg)`;
+
+    };
+
+    window.addEventListener('mousemove', rotateEye, false);
+
+  </script>
 </body>
 </html>
